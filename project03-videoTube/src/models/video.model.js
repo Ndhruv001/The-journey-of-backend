@@ -1,5 +1,5 @@
 import mongoose, {Schema} from "mongoose";
-import mongooseAggregatePaginate from 'mongoose-aggregate-paginate';
+import mongooseAggregatePaginate from 'mongoose-aggregate-paginate-v2';
 
 //video schema
 const videoSchema = new Schema(
