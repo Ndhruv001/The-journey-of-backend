@@ -5,13 +5,16 @@ import cors from 'cors';
 
 
 const app = express();
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // Adjust to your frontend's origin
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization'
+}));
 app.use(express.json());
 app.use('/auth', authRoutes);
 
-app.get('/auth/signup', (req, res) => {
-    res.send("hello how are you");
-})
+
 
 app.listen(config.port, () => {
   console.log(`Server running on port ${config.port}`);

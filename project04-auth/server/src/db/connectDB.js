@@ -20,6 +20,15 @@ export async function findUserByEmail(email) {
   return user[0];
 }
 
+export async function findUserById(id){
+  const [user] = await pool.execute("select * from users where id = ?", [id]);
+  if(!user){
+    console.log("user not found");
+    return ;
+  }
+  return user[0];
+}
+
 export async function createUser(username, email, password){
 
     //bcrypt password
@@ -27,4 +36,9 @@ export async function createUser(username, email, password){
 
     const [result] = await pool.execute("insert into users (username, email, password) values (?, ?, ?)",[username, email, hashPassword]);
     return result.insertId;
+}
+
+export async function changePassword(newPassword, email){
+  const hashPassword = await bcrypt.hash(newPassword,10);
+  await pool.execute("update users set password = ? where email = ? ", [hashPassword, email]);
 }

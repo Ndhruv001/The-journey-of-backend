@@ -25,12 +25,12 @@ export default function useLogin(){
                     "Content-Type" : "application/json"
                 },
                 body : JSON.stringify(formData)
-            })
+            });
             if(response.ok){
                 const data = await response.json();
                 localStorage.setItem("token", JSON.stringify(data.token))
                 console.log("response is ok");
-                navigate('/home')
+                navigate('/user');
             }else{
                 console.log("response is noooot ok");
             }
@@ -39,9 +39,14 @@ export default function useLogin(){
         }
     }
 
+    function handleForgotPassword(){
+        navigate("/forgot-password");
+    }
+
     return {
         formData,
         handleChange,
-        handleSubmit
+        handleSubmit,
+        handleForgotPassword
     }
 }

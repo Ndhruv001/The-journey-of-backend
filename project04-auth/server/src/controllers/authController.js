@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
 import config from '../config/config.js';
-import { findUserByEmail, createUser } from '../db/connectDB.js';
+import { findUserByEmail, createUser, findUserById, changePassword} from '../db/connectDB.js';
 
 
 export async function signup(req, res){
@@ -40,7 +40,27 @@ export async function login(req, res) {
     }
 }
 
-export async function me(req, res) {
+export async function forgotPassword(req, res){
+    const {email, newPassword, confirmPassword} = req.body;
+
+    const user = await findUserByEmail(email);
+    if(!user){
+        console.log("undefind user or email ");
+        res.status(401).json({message : "user not found"});
+    }
+
+    if(newPassword != confirmPassword){
+        console.log("confirm password is wrong");
+        res.status(401).json({message : "unmatched password"});
+    }
+
+    await changePassword(newPassword,email);
+    res.status(201).json({message : "password update successfully!"});
+    
+}
+
+export async function user(req, res) {
     const user = req.user;
-    res.json(user);
+    const data = await findUserById(user.userId);
+    res.json({data});
   }

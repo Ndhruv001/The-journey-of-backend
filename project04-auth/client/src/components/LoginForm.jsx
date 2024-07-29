@@ -1,7 +1,7 @@
 import useLogin from "../hooks/useLogin";
 
 export default function LoginForm() {
-    const {formData, handleChange, handleSubmit} = useLogin();
+    const {formData, handleChange, handleSubmit, handleForgotPassword} = useLogin();
 
   return (
       <form>
@@ -48,6 +48,13 @@ export default function LoginForm() {
             onClick={handleSubmit}
           >
             Log In
+          </button>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+            onClick={handleForgotPassword}
+          >
+            Forgot Password
           </button>
         </div>
       </form>
